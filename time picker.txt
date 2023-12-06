@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+class TimePickerTask extends StatefulWidget {
+  const TimePickerTask({super.key});
+
+  @override
+  State<TimePickerTask> createState() => _TimePickerTaskState();
+}
+
+class _TimePickerTaskState extends State<TimePickerTask> {
+  //time of day variable
+  TimeOfDay _timeOfDay = const TimeOfDay(hour: 8, minute: 30);
+  //time picker method
+  void _showTimePicker() {
+    showTimePicker(context: context, initialTime: TimeOfDay.now())
+        .then((value) {
+      setState(() {
+        _timeOfDay = value!;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text('Timer Picker Widget'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: const BoxDecoration(color: Colors.red),
+              ),
+              Container(
+                width: 50,
+                height: 50,
+                decoration: const BoxDecoration(color: Colors.yellow),
+              )
+            ]),
+            //show time selected
+            Text(_timeOfDay.format(context).toString(),
+                style: const TextStyle(fontSize: 20)),
+            const SizedBox(height: 20),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                onPressed: _showTimePicker,
+                child: const Text('Time Picker',
+                    style: TextStyle(color: Colors.white, fontSize: 23)))
+          ],
+        ),
+      ),
+    );
+  }
+}
